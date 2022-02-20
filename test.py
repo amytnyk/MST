@@ -1,36 +1,26 @@
-import argparse
-from itertools import product
-from timeit import timeit
-from algorithms import algorithms
 from typing import Callable
-from progressbar import SingleProgressBar
-import generator
+from networkx.algorithms import tree
+from core.algorithms import algorithms
+from utils import generator
+import unittest
 
 
-def run(func: Callable, name: str, vertex_count: int, density: float):
-    time_taken = 0
-    iters = 60
+def check_algorithm(function: Callable):
+    def check():
+        checks = 50
+        for i in range(checks):
+            graph = generator.gnp_random_connected_graph(100, .5)
+            mst1 = function(graph)
+            for u, v, data in mst1.edges(data=True):
+                data['weight'] = graph.get_edge_data(u, v)['weight']
+            mst2 = tree.minimum_spanning_tree(graph, algorithm="prim")
 
-    for _ in SingleProgressBar(range(iters), f'V={vertex_count}, D={density} ({name})'):
-        graph = generator.gnp_random_connected_graph(vertex_count, density)
-        time_taken += timeit(lambda: func(graph), number=1)
-
-    return time_taken / iters
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--vertex_count_interval", type=int, default=10)
-    parser.add_argument("--vertex_count", type=int, default=1000)
-    args = parser.parse_args()
-    with open('results/results.csv', 'w', encoding='utf-8') as file:
-        vertices = range(args.vertex_count_interval, args.vertex_count + 1, args.vertex_count_interval)
-        densities = [0.1, 0.5, 0.9]
-        for vertex_count, density, (name, func) in product(vertices, densities, algorithms().items()):
-            time = run(func, name, vertex_count, density)
-            file.write(f"{vertex_count},{density},{name},{time}\n")
-            print()
+            assert mst1.size(weight="weight") == mst2.size(weight="weight")
+    return check
 
 
 if __name__ == "__main__":
-    main()
+    suite = unittest.TestSuite()
+    for name, func in algorithms().items():
+        suite.addTest(unittest.FunctionTestCase(check_algorithm(func)))
+    unittest.TextTestRunner().run(suite)

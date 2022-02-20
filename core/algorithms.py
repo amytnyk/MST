@@ -1,6 +1,6 @@
 from typing import Dict, Callable
-import kruskal
-import prim
+from core import kruskal
+from core import prim
 
 
 def algorithms() -> Dict[str, Callable]:
