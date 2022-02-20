@@ -1,8 +1,8 @@
+import unittest
 from typing import Callable
 from networkx.algorithms import tree
 from core.algorithms import algorithms
 from utils import generator
-import unittest
 
 
 def check_algorithm(function: Callable):
