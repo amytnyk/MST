@@ -19,4 +19,4 @@ jobs:
         pip install networkx
     - name: Unit tests
       run: |
-        python -m unittest
+        python test.py
