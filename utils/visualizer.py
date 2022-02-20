@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def read_results() -> Dict[int, pd.DataFrame]:
-    return dict(tuple(pd.read_csv("../results/results.csv").groupby('density')))
+    return dict(tuple(pd.read_csv("results/results.csv").groupby('density')))
 
 
 def main():

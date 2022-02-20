@@ -1,7 +1,4 @@
-echo 'Running quick test'
-echo 'Validating ...'
-python validator.py
-echo 'Validating finished. Running benchmark ...'
-python test.py --vertex_count 260 --vertex_count_interval 100 --iters 30
+echo 'Running benchmark ...'
+python benchmark.py --vertex_count 260 --vertex_count_interval 100 --iters 30 --no_cache
 echo 'Testing finished. Plotting ...'
-python visualizer.py
+python utils/visualizer.py
