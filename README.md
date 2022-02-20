@@ -79,5 +79,12 @@ Total of 100 * 3 * 2 * 100 = 60000 runs. From each 100 iterations the mean were 
 ![Comparisons](results/images/density_0.1.png)
 ![Comparisons](results/images/density_0.5.png)
 ![Comparisons](results/images/density_0.9.png)
-#### Results
+### Results
 We can clearly see that prim's algorithms run faster than kruskal's. Nevertheless, the difference between them is smaller in sparse graphs (density 0.1) and bigger in dense graphs (density 0.9)
+
+So, we can conclude that it's always more efficient to use Prim's algorithm, even for sparse graph.
+
+P.S. From given plots we can see that time complexity is near O(n<sup>2</sup>log(n)), and it's OK since E=*p**V<sup>2</sup>, where *p* is density of the graph
+### Contributors
+* Oleksii Mytnyk
+* Dmytro Mykytenko

@@ -12,9 +12,8 @@ def run(func: Callable, name: str, vertex_count: int, density: float, iters: int
     time_taken = 0
 
     for _ in SingleProgressBar(range(iters), f'V={vertex_count}, D={density} ({name})'):
-        time_taken += timeit(lambda: func(
-            generator.gnp_random_connected_graph(vertex_count, density
-        )), number=1)
+        graph = generator.gnp_random_connected_graph(vertex_count, density)
+        time_taken += timeit(lambda: func(graph), number=1)
 
     return time_taken / iters
 
