@@ -28,4 +28,3 @@ def build_mst(graph: nx.Graph) -> nx.Graph:
     for i, u in enumerate(mst[1:]):
         final_mst.add_edge(i + 1, u)
     return final_mst
-
