@@ -1,9 +1,9 @@
 import argparse
 import os.path
+from typing import Callable, List
 from itertools import product
 from timeit import timeit
 from core.algorithms import algorithms
-from typing import Callable, List
 from utils.progressbar import SingleProgressBar
 from utils import generator
 
@@ -12,8 +12,9 @@ def run(func: Callable, name: str, vertex_count: int, density: float, iters: int
     time_taken = 0
 
     for _ in SingleProgressBar(range(iters), f'V={vertex_count}, D={density} ({name})'):
-        graph = generator.gnp_random_connected_graph(vertex_count, density)
-        time_taken += timeit(lambda: func(graph), number=1)
+        time_taken += timeit(lambda: func(
+            generator.gnp_random_connected_graph(vertex_count, density
+        )), number=1)
 
     return time_taken / iters
 
@@ -38,12 +39,12 @@ def main():
     densities = [0.1, 0.5, 0.9]
     for vertex_count, density, (name, func) in product(vertices, densities, algorithms().items()):
         config = list(map(str, [vertex_count, density, name]))
-        if not len(list(filter(lambda x: x[:3] == config[:3], results))):
+        if not list(filter(lambda x: x[:3] == config[:3], results)):
             config.append(str(run(func, name, vertex_count, density, args.iters)))
             results.append(config)
 
             with open('results/results.csv', 'w', encoding='utf-8') as file:
-                file.write('\n'.join(map(lambda x: ','.join(x), results)))
+                file.write('\n'.join(map(','.join, results)))
             print()
 
 

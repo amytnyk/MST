@@ -1,7 +1,7 @@
 import argparse
 from timeit import timeit
-from core.algorithms import algorithms
 from typing import Callable
+from core.algorithms import algorithms
 from utils.progressbar import SingleProgressBar
 from utils import generator
 
