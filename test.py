@@ -8,7 +8,7 @@ import unittest
 def check_algorithm(function: Callable):
     def check():
         checks = 50
-        for i in range(checks):
+        for _ in range(checks):
             graph = generator.gnp_random_connected_graph(100, .5)
             mst1 = function(graph)
             for u, v, data in mst1.edges(data=True):
